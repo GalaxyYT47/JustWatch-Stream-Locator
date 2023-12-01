@@ -20,7 +20,7 @@ JustWatch Stream Locator is a Python script designed to help users find the stre
 2. Enter the JustWatch URL of the movie or TV show when prompted.
 3. View the list of streaming services and the regions where the title is available.
 
-4. ## Requirements
+## Requirements
 - Python 3
 - `requests` library
 - `beautifulsoup4` library
