@@ -1,13 +1,29 @@
 import requests
 from bs4 import BeautifulSoup
 import sys
+import os
+import ctypes
+import threading
+import stat
+import re
 
-icons = {
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+all_icons = {
     'Netflix': "https://images.justwatch.com/icon/207360008/s100/netflix.jpg",
     'Paramount+': "https://images.justwatch.com/icon/242706661/s100/paramountplus.jpg",
     'HBOMax': "https://images.justwatch.com/icon/285237061/s100/hbomax.jpg",
+    'Max': "https://images.justwatch.com/icon/305458112/s100/max.jpg",
+    'Disney+': "https://images.justwatch.com/icon/147638351/s100/disneyplus.jpg",
+    'Peacock': "https://images.justwatch.com/icon/194173871/s100/peacocktvpremium.jpg",
+    'Hulu': "https://images.justwatch.com/icon/116305230/s100/hulu.jpg",
     'Viaplay': "https://images.justwatch.com/icon/914018/s100/viaplay.jpg",
-    'Disney+': "https://images.justwatch.com/icon/147638351/s100/disneyplus.jpg"
+    'Prime Video': "https://images.justwatch.com/icon/52449539/s100/amazonprime.jpg",
+    'AppleTV+': "https://images.justwatch.com/icon/152862153/s100/appletvplus.jpg"
 }
 
 country_mapping = {
@@ -85,21 +101,34 @@ continent_mapping = {
 
 continent_order = ['Europe', 'North America', 'Asia', 'Africa', 'South America', 'Oceania']
 
-def find_streaming_services_icons(soup, icons):
-    found_icons = []
+programdata = r"C:\ProgramData\Galaxy\JustWatch Stream Locator"
+
+settings = r'C:\ProgramData\Galaxy\JustWatch Stream Locator\settings.txt'
+
+leaving_soon_status = {}
+
+def find_streaming_services_icons(soup, filtered_icons):
+    found_icons = {}
     stream_offers = soup.find_all('div', class_='buybox-row stream')
 
     for stream_offer in stream_offers:
         offers = stream_offer.find_all('a', class_='offer')
         for offer in offers:
             img = offer.find('img')
-            if img and img.get('src') in icons.values():
-                for service, icon_url in icons.items():
+            leaving_icon = offer.find('span', class_='offer__label--leaving-icon') is not None
+            if img and img.get('src') in filtered_icons.values():
+                for service, icon_url in filtered_icons.items():
                     if img.get('src') == icon_url:
-                        found_icons.append(service)
+                        if service not in found_icons:
+                            found_icons[service] = []
+                        found_icons[service].append(leaving_icon)
                         break
 
     return found_icons
+
+def clear_input():
+    if os.name == 'nt':
+        _ = os.system('cls')
 
 def extract_title_and_year(soup):
     title_block = soup.find('div', class_='title-block')
@@ -113,76 +142,479 @@ def extract_title_and_year(soup):
         formatted_output = f"{title_text} {year_text}"
         return formatted_output
 
+    clear_input()
     print("You have entered the main website URL. Please provide a specific movie or content URL")
     sys.exit()
 
-initial_url = input("URL: ")
+def main():
+    initial_url = input("Input: ")
 
-if not initial_url.startswith("https://www.justwatch.com"):
-    if initial_url.startswith("http://"):
-        initial_url = "https://" + initial_url[len("http://"):]
-    elif initial_url.startswith("www.justwatch.com"):
-        initial_url = "https://" + initial_url
-    elif initial_url.startswith("justwatch.com"):
-        initial_url = "https://www." + initial_url
+    def is_url(string):
+        return string.startswith("http://") or string.startswith("https://") or string.startswith("www.") or ".com" in string
+
+    def process_url(initial_url):
+        if initial_url.startswith("https://www.justwatch.com"):
+            return initial_url
+        elif initial_url.startswith("http://"):
+            return "https://" + initial_url[len("http://"):]
+        elif initial_url.startswith("www.justwatch.com"):
+            return "https://" + initial_url
+        elif initial_url.startswith("justwatch.com"):
+            return "https://www." + initial_url
+        else:
+            clear_input()
+            print("Please provide a valid JustWatch URL or a movie name")
+            sys.exit()
+
+    if initial_url.lower() in ["settings", "s"]:
+
+        def set_settings():
+            with open(settings, 'r') as file:
+                contents = file.read()
+
+                clear_input()
+
+                print(contents)
+
+            edit_settings = input("Edit: ").lower().replace(" ", "")
+
+            if edit_settings.lower() in ["netflix=true", "netflix=t", "net=true", "net=t", "ne=true", "ne=t", "n=true", "n=t", "1=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) >= 0:
+                    lines[0] = "Netflix = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["netflix=false", "netflix=f", "net=false", "net=f", "ne=false", "ne=f", "n=false", "n=f", "1=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) >= 0:
+                    lines[0] = "Netflix = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["paramountplus=true", "paramountplus=t", "paramount+=true", "paramount+=t", "par=true", "par=t", "pa=true", "pa=t", "pp=true", "pp=t", "p+=true", "p+=t", "2=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 1:
+                    lines[1] = "Paramount+ = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["paramountplus=false", "paramountplus=f", "paramount+=false", "paramount+=f", "par=false", "par=f", "pa=false", "pa=f", "pp=false", "pp=f", "p+=false", "p+=f", "2=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 1:
+                    lines[1] = "Paramount+ = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["hbomax=true", "hbomax=t", "hbo=true", "hbo=t", "hb=true", "hb=t", "3=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 2:
+                    lines[2] = "HBOMax = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["hbomax=false", "hbomax=f", "hbo=false", "hbo=f", "hb=false", "hb=f", "3=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 2:
+                    lines[2] = "HBOMax = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["max=true", "max=t", "ma=true", "ma=t", "m=true", "m=t", "4=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 3:
+                    lines[3] = "Max = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["max=false", "max=f", "ma=false", "ma=f", "m=false", "m=f", "4=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 3:
+                    lines[3] = "Max = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["disneyplus=true", "disneyplus=t", "disney+=true", "disney+=t", "disney=true", "disney=t", "dis=true", "dis=t", "di=true", "di=t", "d=true", "d=t", "5=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 4:
+                    lines[4] = "Disney+ = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["disneyplus=false", "disneyplus=f", "disney+=false", "disney+=f", "disney=false", "disney=f", "dis=false", "dis=f", "di=false", "di=f", "d=false", "d=f", "5=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 4:
+                    lines[4] = "Disney+ = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["peacock=true", "peacock=t", "pea=true", "pea=t", "pe=true", "pe=t", "p=true", "p=t", "6=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 5:
+                    lines[5] = "Peacock = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["peacock=false", "peacock=f", "pea=false", "pea=f", "pe=false", "pe=f", "p=false", "p=f", "6=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 5:
+                    lines[5] = "Peacock = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["hulu=true", "hulu=t","hul=true", "hul=t", "hu=true", "hu=t", "h=true", "h=t", "7=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 6:
+                    lines[6] = "Hulu = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["hulu=false", "hulu=f", "hul=false", "hul=f", "hu=false", "hu=f", "h=false", "h=f", "7=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 6:
+                    lines[6] = "Hulu = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["viaplay=true", "viaplay=t", "via=true", "via=t", "vi=true", "vi=t", "v=true", "v=t", "8=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 7:
+                    lines[7] = "Viaplay = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["viaplay=false", "viaplay=f", "via=false", "via=f", "vi=false", "vi=f", "v=false", "v=f", "8=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 7:
+                    lines[7] = "Viaplay = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["primevideo=true", "primevideo=t", "prime=true", "prime=t", "video=true", "video=t", "pri=true", "pri=t", "pr=true", "pr=t", "pv=true", "pv=t", "9=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 8:
+                    lines[8] = "Prime Video = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["primevideo=false", "primevideo=f", "prime=false", "prime=f", "video=false", "video=f", "pri=false", "pri=f", "pr=false", "pr=f", "pv=false", "pv=f", "9=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 8:
+                    lines[8] = "Prime Video = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["appletvplus=true", "appletvplus=t", "appletv+=true", "appletv+=t", "apple=true", "apple=t", "appletv=true", "appletv=t", "app=true", "app=t", "ap=true", "ap=t", "atv=true", "atv=t", "at=true", "at=t", "tv=true", "tv=t", "tv+=true", "tv+=t", "tvplus=true", "tvplus=t", "10=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 9:
+                    lines[9] = "AppleTV+ = True\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            elif edit_settings.lower() in ["appletvplus=false", "appletvplus=f", "appletv+=false", "appletv+=f", "apple=false", "apple=f", "appletv=false", "appletv=f", "app=false", "app=f", "ap=false", "ap=f", "atv=false", "atv=f", "at=false", "at=f", "tv=false", "tv=f", "tv+=false", "tv+=f", "tvplus=false", "tvplus=f", "10=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 9:
+                    lines[9] = "AppleTV+ = False\n"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                clear_input()
+
+                set_settings()
+
+            else:
+                clear_input()
+                main()
+
+        set_settings()
     else:
-        print("This script is designed to work with JustWatch URLs only. Please provide a valid JustWatch URL")
-        sys.exit()
+        if is_url(initial_url):
+            initial_url = process_url(initial_url)
+        else:
+            def search_justwatch(query, year=None):
+                encoded_query = requests.utils.quote(query)
 
-initial_response = requests.get(initial_url)
+                url = f"https://www.justwatch.com/us/search?q={encoded_query}"
+                response = requests.get(url)
 
-if initial_response.status_code == 200:
-    initial_soup = BeautifulSoup(initial_response.content, 'html.parser')
-    title = extract_title_and_year(initial_soup)
-    alternate_links = initial_soup.find_all('link', rel='alternate')
+                if response.status_code == 200:
+                    soup = BeautifulSoup(response.content, 'html.parser')
+                    
+                    if year:
+                        results = soup.find_all(class_='title-list-row__column-header', limit=5)
+                        for result in results:
+                            header_year = result.find("span", {"class": "header-year"})
+                            if header_year and f"({year})" in header_year.text:
+                                if 'href' in result.attrs:
+                                    full_url = f"https://www.justwatch.com{result['href']}"
+                                    return full_url
 
-    print("Title:", title)
-
-    service_continents = {service: {} for service in icons}
-
-    for index, link in enumerate(alternate_links, start=1):
-        if 'hreflang' in link.attrs and 'href' in link.attrs:
-            hreflang = link['hreflang'].split('-')[-1]
-            country_name = country_mapping.get(hreflang, 'Unknown')
-            continent = continent_mapping.get(hreflang, 'Unknown')
-
-            country_url = link['href']
-            country_response = requests.get(country_url)
-            if country_response.status_code == 200:
-                country_soup = BeautifulSoup(country_response.content, 'html.parser')
-                found_services = find_streaming_services_icons(country_soup, icons)
-                for service in found_services:
-                    if continent not in service_continents[service]:
-                        service_continents[service][continent] = []
-                    if country_name not in service_continents[service][continent]:
-                        service_continents[service][continent].append(country_name)
-
-        print(f"Progress: {index / len(alternate_links) * 100:.2f}%", end='\r')
-
-    print("\n")
-
-    any_service_found = False
-    for service, continents in service_continents.items():
-        if continents:
-            print(f"{service}:\n")
-
-            first_continent = True
-            for ordered_continent in continent_order:
-                if ordered_continent in continents:
-                    if not first_continent:
-                        print()
+                    title_column_header = soup.find(class_='title-list-row__column-header')
+                    if title_column_header and 'href' in title_column_header.attrs:
+                        full_url = f"https://www.justwatch.com{title_column_header['href']}"
+                        return full_url
                     else:
-                        first_continent = False
+                        sys.exit("No results found.")
+                else:
+                    sys.exit("Failed to fetch JustWatch search results.")
 
-                    print(f"- {ordered_continent}:")
-                    for country in sorted(continents[ordered_continent]):
-                        print(f"  - {country}")
-                        any_service_found = True
+            try:
+                number_matches = re.findall(r'\b\d{4}\b', initial_url)
+                
+                if number_matches:
+                    if initial_url.startswith(number_matches[0]):
+                        if len(number_matches) > 1:
+                            year = number_matches[1]
+                            query_without_year = initial_url.replace(year, '').strip()
+                        else:
+                            query_without_year = initial_url
+                            year = None
+                    else:
+                        if len(number_matches) >= 2:
+                            year = number_matches[-1]
+                            query_without_year = re.sub(r'\b' + re.escape(year) + r'\b', '', initial_url).strip()
+                        elif len(number_matches) == 1:
+                            year = number_matches[0]
+                            query_without_year = re.sub(r'\b\d{4}\b', '', initial_url).strip()
+                        else:
+                            query_without_year = initial_url
+                            year = None
+                else:
+                    query_without_year = initial_url
+                    year = None
+                
+                query_without_year = re.sub(r'\(|\)', '', query_without_year).strip()
 
-            print()
-        
-    if not any_service_found:
-        print("None\n")
+                url = search_justwatch(query_without_year, year)
+                initial_url = url
+            except:
+                clear_input()
+                print("No results found.")
+                sys.exit()
 
-else:
-    print(f"Failed to retrieve initial page, status code: {initial_response.status_code}")
+        def read_settings(file_path):
+            settings = {}
+            with open(file_path, 'r') as file:
+                for line in file:
+                    if '=' in line:
+                        key, value = line.rsplit(' = ', 1)
+                        settings[key.strip()] = value.strip() == 'True'
+            return settings
+
+        def filter_icons(settings, all_icons):
+            return {key: all_icons[key] for key in settings if settings[key] and key in all_icons}
+
+        settings_icons = read_settings(settings)
+        filtered_icons = filter_icons(settings_icons, all_icons)
+
+        initial_response = requests.get(initial_url)
+
+        if initial_response.status_code == 200:
+            initial_soup = BeautifulSoup(initial_response.content, 'html.parser')
+            title = extract_title_and_year(initial_soup)
+            alternate_links = initial_soup.find_all('link', rel='alternate')
+
+            clear_input()
+
+            print("Title:", title)
+
+            service_continents = {service: {} for service in filtered_icons}
+
+            for index, link in enumerate(alternate_links, start=1):
+                if 'hreflang' in link.attrs and 'href' in link.attrs:
+                    hreflang = link['hreflang'].split('-')[-1]
+                    country_name = country_mapping.get(hreflang, 'Unknown')
+                    continent = continent_mapping.get(hreflang, 'Unknown')
+
+                    country_url = link['href']
+                    country_response = requests.get(country_url)
+                    if country_response.status_code == 200:
+                        country_soup = BeautifulSoup(country_response.content, 'html.parser')
+                    found_services = find_streaming_services_icons(country_soup, filtered_icons)
+                    for service, leaving_soon_list in found_services.items():
+                        if continent not in service_continents[service]:
+                            service_continents[service][continent] = {}
+                        if country_name not in service_continents[service][continent]:
+                            service_continents[service][continent][country_name] = any(leaving_soon_list)
+
+                print(f"Progress: {index / len(alternate_links) * 100:.2f}%", end='\r')
+
+            print("\n")
+
+            any_service_found = False
+            for service, continents in service_continents.items():
+                if continents:
+                    print(f"{service}:\n")
+                    first_continent = True
+                    for ordered_continent in continent_order:
+                        if ordered_continent in continents:
+                            if not first_continent:
+                                print()
+                            else:
+                                first_continent = False
+
+                            print(f"- {ordered_continent}:")
+                            for country, leaving_soon in continents[ordered_continent].items():
+                                leaving_soon_text = "(Leaving Soon)" if leaving_soon else ""
+                                print(f"  - {country} {leaving_soon_text}")
+                                any_service_found = True
+
+                    print()
+
+            if not any_service_found:
+                print("None\n")
+
+        else:
+            print(f"Failed to retrieve initial page, status code: {initial_response.status_code}")
+
+def create_settings():
+    if not os.path.exists(programdata):
+        os.makedirs(programdata, exist_ok=True)
+
+    if not os.path.exists(settings):
+        with open(settings, "w") as create:
+            create.write("Netflix = True\nParamount+ = True\nHBOMax = True\nMax = True\nDisney+ = True\nPeacock = True\nHulu = True\nViaplay = True\nPrime Video = True\nApple TV+ = True\n")
+
+    if is_admin():
+        os.chmod(programdata, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+
+create_settings_thread = threading.Thread(target=create_settings, daemon=True)
+create_settings_thread.start()
+
+main()
