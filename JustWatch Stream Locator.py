@@ -21,9 +21,10 @@ all_icons = {
     'Disney+': "https://images.justwatch.com/icon/147638351/s100/disneyplus.jpg",
     'Peacock': "https://images.justwatch.com/icon/194173871/s100/peacocktvpremium.jpg",
     'Hulu': "https://images.justwatch.com/icon/116305230/s100/hulu.jpg",
+    'Shudder': "https://images.justwatch.com/icon/2562359/s100/shudder.jpg",
     'Viaplay': "https://images.justwatch.com/icon/914018/s100/viaplay.jpg",
     'Prime Video': "https://images.justwatch.com/icon/52449539/s100/amazonprime.jpg",
-    'AppleTV+': "https://images.justwatch.com/icon/152862153/s100/appletvplus.jpg"
+    'AppleTV+': "https://images.justwatch.com/icon/152862153/s100/appletvplus.jpg",
 }
 
 country_mapping = {
@@ -45,14 +46,14 @@ country_mapping = {
     'ID': 'Indonesia', 'IE': 'Ireland', 'IL': 'Israel', 'IN': 'India', 
     'IQ': 'Iraq', 'IS': 'Iceland', 'IT': 'Italy', 'JM': 'Jamaica', 
     'JO': 'Jordan', 'JP': 'Japan', 'KE': 'Kenya', 'KR': 'South Korea', 
-    'KW': 'Kuwait', 'KZ': 'Kazakhstan', 'LB': 'Lebanon', 'LC': 'Saint Lucia', 
-    'LI': 'Liechtenstein', 'LK': 'Sri Lanka', 'LT': 'Lithuania', 'LU': 'Luxembourg', 
+    'KW': 'Kuwait', 'LB': 'Lebanon', 'LC': 'Saint Lucia', 
+    'LI': 'Liechtenstein', 'LT': 'Lithuania', 'LU': 'Luxembourg', 
     'LV': 'Latvia', 'LY': 'Libya', 'MA': 'Morocco', 'MC': 'Monaco', 
     'MD': 'Moldova', 'ME': 'Montenegro', 'MG': 'Madagascar', 'MK': 'North Macedonia', 
-    'ML': 'Mali', 'MT': 'Malta', 'MU': 'Mauritius', 'MV': 'Maldives', 
+    'ML': 'Mali', 'MT': 'Malta', 'MU': 'Mauritius', 
     'MW': 'Malawi', 'MX': 'Mexico', 'MY': 'Malaysia', 'MZ': 'Mozambique', 
     'NE': 'Niger', 'NG': 'Nigeria', 'NI': 'Nicaragua', 'NL': 'Netherlands', 
-    'NO': 'Norway', 'NP': 'Nepal', 'NZ': 'New Zealand', 'OM': 'Oman', 
+    'NO': 'Norway', 'NZ': 'New Zealand', 'OM': 'Oman', 
     'PA': 'Panama', 'PE': 'Peru', 'PF': 'French Polynesia', 'PG': 'Papua New Guinea', 
     'PH': 'Philippines', 'PK': 'Pakistan', 'PL': 'Poland', 'PS': 'Palestine', 
     'PT': 'Portugal', 'PY': 'Paraguay', 'QA': 'Qatar', 'RO': 'Romania', 
@@ -61,8 +62,8 @@ country_mapping = {
     'SM': 'San Marino', 'SN': 'Senegal', 'SV': 'El Salvador', 'TC': 'Turks and Caicos Islands', 
     'TH': 'Thailand', 'TN': 'Tunisia', 'TR': 'Turkey', 'TT': 'Trinidad and Tobago', 
     'TW': 'Taiwan', 'TZ': 'Tanzania', 'UA': 'Ukraine', 'UG': 'Uganda', 
-    'US': 'United States', 'UY': 'Uruguay', 'UZ': 'Uzbekistan', 'VA': 'Vatican City', 
-    'VE': 'Venezuela', 'VN': 'Vietnam', 'XK': 'Kosovo', 'YE': 'Yemen', 
+    'US': 'United States', 'UY': 'Uruguay', 'VA': 'Vatican City', 
+    'VE': 'Venezuela', 'XK': 'Kosovo', 'YE': 'Yemen', 
     'ZA': 'South Africa', 'ZM': 'Zambia', 'ZW': 'Zimbabwe',
 }
 
@@ -82,12 +83,12 @@ continent_mapping = {
     'HR': 'Europe', 'HU': 'Europe', 'ID': 'Asia', 'IE': 'Europe', 'IL': 'Asia',
     'IN': 'Asia', 'IQ': 'Asia', 'IS': 'Europe', 'IT': 'Europe', 'JM': 'North America',
     'JO': 'Asia', 'JP': 'Asia', 'KE': 'Africa', 'KR': 'Asia', 'KW': 'Asia',
-    'KZ': 'Asia', 'LB': 'Asia', 'LC': 'North America', 'LI': 'Europe', 'LK': 'Asia',
+    'LB': 'Asia', 'LC': 'North America', 'LI': 'Europe',
     'LT': 'Europe', 'LU': 'Europe', 'LV': 'Europe', 'LY': 'Africa', 'MA': 'Africa',
     'MC': 'Europe', 'MD': 'Europe', 'ME': 'Europe', 'MG': 'Africa', 'MK': 'Europe',
-    'ML': 'Africa', 'MT': 'Europe', 'MU': 'Africa', 'MV': 'Asia', 'MW': 'Africa',
+    'ML': 'Africa', 'MT': 'Europe', 'MU': 'Africa', 'MW': 'Africa',
     'MX': 'North America', 'MY': 'Asia', 'MZ': 'Africa', 'NE': 'Africa', 'NG': 'Africa',
-    'NI': 'North America', 'NL': 'Europe', 'NO': 'Europe', 'NP': 'Asia', 'NZ': 'Oceania',
+    'NI': 'North America', 'NL': 'Europe', 'NO': 'Europe', 'NZ': 'Oceania',
     'OM': 'Asia', 'PA': 'North America', 'PE': 'South America', 'PF': 'Oceania',
     'PG': 'Oceania', 'PH': 'Asia', 'PK': 'Asia', 'PL': 'Europe', 'PS': 'Asia',
     'PT': 'Europe', 'PY': 'South America', 'QA': 'Asia', 'RO': 'Europe', 'RS': 'Europe',
@@ -95,15 +96,46 @@ continent_mapping = {
     'SI': 'Europe', 'SK': 'Europe', 'SM': 'Europe', 'SN': 'Africa', 'SV': 'North America',
     'TC': 'North America', 'TH': 'Asia', 'TN': 'Africa', 'TR': 'Asia', 'TT': 'North America',
     'TW': 'Asia', 'TZ': 'Africa', 'UA': 'Europe', 'UG': 'Africa', 'US': 'North America',
-    'UY': 'South America', 'UZ': 'Asia', 'VA': 'Europe', 'VE': 'South America',
-    'VN': 'Asia', 'XK': 'Europe', 'YE': 'Asia', 'ZA': 'Africa', 'ZM': 'Africa', 'ZW': 'Africa'
+    'UY': 'South America', 'VA': 'Europe', 'VE': 'South America',
+    'XK': 'Europe', 'YE': 'Asia', 'ZA': 'Africa', 'ZM': 'Africa', 'ZW': 'Africa'
+}
+
+search_mapping = {
+    'ad': 'cerca', 'al': 'busca', 'ao': 'busca',
+    'ar': 'buscar', 'at': 'suche', 'az': 'axtarış',
+    'be': 'recherche', 'bf': 'recherche', 'bo': 'buscar',
+    'br': 'busca', 'by': 'пошук', 'cd': 'recherche',
+    'ch': 'Suche', 'ci': 'recherche', 'cl': 'buscar',
+    'co': 'buscar', 'cr': 'buscar', 'cu': 'buscar',
+    'cv': 'busca', 'cz': 'vyhledání', 'de': 'Suche',
+    'do': 'buscar', 'ec': 'buscar', 'es': 'buscar',
+    'fr': 'recherche', 'gf': 'recherche', 'gq': 'buscar',
+    'gt': 'buscar', 'hn': 'buscar', 'hr': 'pretraživanje',
+    'is': 'leita', 'li': 'Suche', 'lu': 'recherche',
+    'mc': 'recherche', 'me': 'pretraga', 'mg': 'recherche',
+    'mk': 'пребарување', 'ml': 'recherche', 'mt': 'fittex',
+    'mu': 'recherche', 'mx': 'buscar', 'mz': 'busca',
+    'ne': 'recherche', 'ni': 'buscar', 'pa': 'buscar',
+    'pe': 'buscar', 'pf': 'recherche', 'pt': 'busca',
+    'py': 'buscar', 'rs': 'pretraga', 'sc': 'recherche',
+    'si': 'iskanje', 'sk': 'vyhľadávať', 'sm': 'cerca',
+    'sn': 'recherche', 'sv': 'buscar', 'tr': 'arama',
+    'tz': 'tafuta', 'ua': 'пошук', 'uy': 'buscar',
+    'va': 'cerca', 've': 'buscar', 'xk': 'kërko',
 }
 
 continent_order = ['Europe', 'North America', 'Asia', 'Africa', 'South America', 'Oceania']
 
-programdata = r"C:\ProgramData\Galaxy\JustWatch Stream Locator"
+try:
+    appdata = os.environ.get("APPDATA")
+except:
+    appdata = "C:\\ProgramData"
 
-settings = r'C:\ProgramData\Galaxy\JustWatch Stream Locator\settings.txt'
+data_folder = os.path.join(appdata, "Galaxy", "JustWatch Stream Locator")
+
+settings = os.path.join(data_folder, "settings.txt")
+
+engine = os.path.join(data_folder, "engine.txt")
 
 leaving_soon_status = {}
 
@@ -136,10 +168,7 @@ def extract_title_and_year(soup):
         title = title_block.find('h1')
         title_text = title.get_text().strip() if title else "Unknown Title"
 
-        year_span = title_block.find('span', class_='text-muted')
-        year_text = year_span.get_text().strip() if year_span else "Unknown Year"
-
-        formatted_output = f"{title_text} {year_text}"
+        formatted_output = title_text.replace("  ", " ")
         return formatted_output
 
     clear_input()
@@ -166,15 +195,71 @@ def main():
             print("Please provide a valid JustWatch URL or a movie name")
             sys.exit()
 
-    if initial_url.lower() in ["settings", "s"]:
+    if initial_url.lower() in ["engine", "e"]:
+
+        short_country_mapping = {code: name.lower().replace(" ", "") for code, name in country_mapping.items()}
+
+        if 'GB' in short_country_mapping:
+            short_country_mapping['UK'] = short_country_mapping.pop('GB')
+
+        edited_country_mapping = {code: name for code, name in country_mapping.items()}
+
+        if 'GB' in edited_country_mapping:
+            edited_country_mapping['UK'] = edited_country_mapping.pop('GB')
+
+        def set_engine():
+            with open(engine, 'r') as file:
+                contents = file.read()
+
+            clear_input()
+    
+            country_code = None
+
+            if contents.upper() in edited_country_mapping:
+                country_name = edited_country_mapping[contents.upper()]
+                print(f"{country_name} ({contents.upper()})\n")
+            else:
+                country_code = None
+                for code, name in edited_country_mapping.items():
+                    if name.lower() == contents.lower():
+                        country_code = code
+                        break
+
+            edit_engine = input("Edit: ").lower().replace(" ", "")
+
+            if edit_engine.upper() in short_country_mapping:
+                country_code = edit_engine.upper()
+            else:
+                for code, name in short_country_mapping.items():
+                    if name.lower() == edit_engine.lower():
+                        country_code = code
+                        break
+
+            if country_code:
+                with open(engine, 'w') as file:
+                    file.write(country_code.lower())
+                set_engine()
+
+            elif edit_engine.lower() == "reset":
+                with open(engine, "w") as reset:
+                    reset.write("us")
+                set_engine()
+
+            else:
+                clear_input()
+                main()
+
+        set_engine()
+
+    elif initial_url.lower() in ["settings", "s"]:
 
         def set_settings():
             with open(settings, 'r') as file:
                 contents = file.read()
 
-                clear_input()
+            clear_input()
 
-                print(contents)
+            print(contents, "\n")
 
             edit_settings = input("Edit: ").lower().replace(" ", "")
 
@@ -188,8 +273,6 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
             elif edit_settings.lower() in ["netflix=false", "netflix=f", "net=false", "net=f", "ne=false", "ne=f", "n=false", "n=f", "1=f"]:
@@ -202,11 +285,9 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["paramountplus=true", "paramountplus=t", "paramount+=true", "paramount+=t", "par=true", "par=t", "pa=true", "pa=t", "pp=true", "pp=t", "p+=true", "p+=t", "2=t"]:
+            elif edit_settings.lower() in ["paramountplus=true", "paramountplus=t", "paramount+=true", "paramount+=t", "paramount=true", "paramount=t", "par=true", "par=t", "pa=true", "pa=t", "pp=true", "pp=t", "p+=true", "p+=t", "2=t"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
@@ -216,11 +297,9 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["paramountplus=false", "paramountplus=f", "paramount+=false", "paramount+=f", "par=false", "par=f", "pa=false", "pa=f", "pp=false", "pp=f", "p+=false", "p+=f", "2=f"]:
+            elif edit_settings.lower() in ["paramountplus=false", "paramountplus=f", "paramount+=false", "paramount+=f", "paramount=false", "paramount=f", "par=false", "par=f", "pa=false", "pa=f", "pp=false", "pp=f", "p+=false", "p+=f", "2=f"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
@@ -229,8 +308,6 @@ def main():
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
-
-                clear_input()
 
                 set_settings()
 
@@ -244,8 +321,6 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
             elif edit_settings.lower() in ["hbomax=false", "hbomax=f", "hbo=false", "hbo=f", "hb=false", "hb=f", "3=f"]:
@@ -257,8 +332,6 @@ def main():
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
-
-                clear_input()
 
                 set_settings()
 
@@ -272,8 +345,6 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
             elif edit_settings.lower() in ["max=false", "max=f", "ma=false", "ma=f", "m=false", "m=f", "4=f"]:
@@ -285,8 +356,6 @@ def main():
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
-
-                clear_input()
 
                 set_settings()
 
@@ -300,8 +369,6 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
             elif edit_settings.lower() in ["disneyplus=false", "disneyplus=f", "disney+=false", "disney+=f", "disney=false", "disney=f", "dis=false", "dis=f", "di=false", "di=f", "d=false", "d=f", "5=f"]:
@@ -313,8 +380,6 @@ def main():
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
-
-                clear_input()
 
                 set_settings()
 
@@ -328,8 +393,6 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
             elif edit_settings.lower() in ["peacock=false", "peacock=f", "pea=false", "pea=f", "pe=false", "pe=f", "p=false", "p=f", "6=f"]:
@@ -341,8 +404,6 @@ def main():
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
-
-                clear_input()
 
                 set_settings()
 
@@ -356,8 +417,6 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
             elif edit_settings.lower() in ["hulu=false", "hulu=f", "hul=false", "hul=f", "hu=false", "hu=f", "h=false", "h=f", "7=f"]:
@@ -370,91 +429,107 @@ def main():
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["viaplay=true", "viaplay=t", "via=true", "via=t", "vi=true", "vi=t", "v=true", "v=t", "8=t"]:
+            elif edit_settings.lower() in ["shudder=true", "shudder=t", "shud=true", "shud=t", "shu=true", "shu=t", "sh=true", "sh=t", "s=true", "s=t", "8=t"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
                 if len(lines) > 7:
-                    lines[7] = "Viaplay = True\n"
+                    lines[7] = "Shudder = True\n"
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["viaplay=false", "viaplay=f", "via=false", "via=f", "vi=false", "vi=f", "v=false", "v=f", "8=f"]:
+            elif edit_settings.lower() in ["shudder=false", "shudder=f", "shud=false", "shud=f", "shu=false", "shu=f", "sh=false", "sh=f", "s=false", "s=f", "8=f"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
                 if len(lines) > 7:
-                    lines[7] = "Viaplay = False\n"
+                    lines[7] = "Shudder = False\n"
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["primevideo=true", "primevideo=t", "prime=true", "prime=t", "video=true", "video=t", "pri=true", "pri=t", "pr=true", "pr=t", "pv=true", "pv=t", "9=t"]:
+            elif edit_settings.lower() in ["viaplay=true", "viaplay=t", "via=true", "via=t", "vi=true", "vi=t", "v=true", "v=t", "9=t"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
                 if len(lines) > 8:
-                    lines[8] = "Prime Video = True\n"
+                    lines[8] = "Viaplay = True\n"
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["primevideo=false", "primevideo=f", "prime=false", "prime=f", "video=false", "video=f", "pri=false", "pri=f", "pr=false", "pr=f", "pv=false", "pv=f", "9=f"]:
+            elif edit_settings.lower() in ["viaplay=false", "viaplay=f", "via=false", "via=f", "vi=false", "vi=f", "v=false", "v=f", "9=f"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
                 if len(lines) > 8:
-                    lines[8] = "Prime Video = False\n"
+                    lines[8] = "Viaplay = False\n"
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["appletvplus=true", "appletvplus=t", "appletv+=true", "appletv+=t", "apple=true", "apple=t", "appletv=true", "appletv=t", "app=true", "app=t", "ap=true", "ap=t", "atv=true", "atv=t", "at=true", "at=t", "tv=true", "tv=t", "tv+=true", "tv+=t", "tvplus=true", "tvplus=t", "10=t"]:
+            elif edit_settings.lower() in ["primevideo=true", "primevideo=t", "prime=true", "prime=t", "video=true", "video=t", "pri=true", "pri=t", "pr=true", "pr=t", "pv=true", "pv=t", "10=t"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
                 if len(lines) > 9:
-                    lines[9] = "AppleTV+ = True\n"
+                    lines[9] = "Prime Video = True\n"
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
-
                 set_settings()
 
-            elif edit_settings.lower() in ["appletvplus=false", "appletvplus=f", "appletv+=false", "appletv+=f", "apple=false", "apple=f", "appletv=false", "appletv=f", "app=false", "app=f", "ap=false", "ap=f", "atv=false", "atv=f", "at=false", "at=f", "tv=false", "tv=f", "tv+=false", "tv+=f", "tvplus=false", "tvplus=f", "10=f"]:
+            elif edit_settings.lower() in ["primevideo=false", "primevideo=f", "prime=false", "prime=f", "video=false", "video=f", "pri=false", "pri=f", "pr=false", "pr=f", "pv=false", "pv=f", "10=f"]:
                 with open(settings, 'r') as file:
                     lines = file.readlines()
 
                 if len(lines) > 9:
-                    lines[9] = "AppleTV+ = False\n"
+                    lines[9] = "Prime Video = False\n"
 
                 with open(settings, 'w') as file:
                     file.writelines(lines)
 
-                clear_input()
+                set_settings()
+
+            elif edit_settings.lower() in ["appletvplus=true", "appletvplus=t", "appletv+=true", "appletv+=t", "apple=true", "apple=t", "appletv=true", "appletv=t", "app=true", "app=t", "ap=true", "ap=t", "atv=true", "atv=t", "at=true", "at=t", "tv=true", "tv=t", "tv+=true", "tv+=t", "tvplus=true", "tvplus=t", "11=t"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 10:
+                    lines[10] = "AppleTV+ = True"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+
+                set_settings()
+
+            elif edit_settings.lower() in ["appletvplus=false", "appletvplus=f", "appletv+=false", "appletv+=f", "apple=false", "apple=f", "appletv=false", "appletv=f", "app=false", "app=f", "ap=false", "ap=f", "atv=false", "atv=f", "at=false", "at=f", "tv=false", "tv=f", "tv+=false", "tv+=f", "tvplus=false", "tvplus=f", "11=f"]:
+                with open(settings, 'r') as file:
+                    lines = file.readlines()
+
+                if len(lines) > 10:
+                    lines[10] = "AppleTV+ = False"
+
+                with open(settings, 'w') as file:
+                    file.writelines(lines)
+    
+                set_settings()
+
+            elif edit_settings.lower() == "reset":
+                with open(settings, "w") as reset:
+                    reset.write("Netflix = True\nParamount+ = True\nHBOMax = True\nMax = True\nDisney+ = True\nPeacock = True\nHulu = True\nShudder = True\nViaplay = True\nPrime Video = True\nApple TV+ = True")
 
                 set_settings()
 
@@ -470,7 +545,15 @@ def main():
             def search_justwatch(query, year=None):
                 encoded_query = requests.utils.quote(query)
 
-                url = f"https://www.justwatch.com/us/search?q={encoded_query}"
+                with open(engine, 'r') as file:
+                    search_engine = file.read()
+
+                if search_engine in search_mapping:
+                    search = f"{search_mapping[search_engine]}"
+                else:
+                    search = "search"
+
+                url = f"https://www.justwatch.com/{search_engine}/{search}?q={encoded_query}"
                 response = requests.get(url)
 
                 if response.status_code == 200:
@@ -492,7 +575,29 @@ def main():
                     else:
                         sys.exit("No results found.")
                 else:
-                    sys.exit("Failed to fetch JustWatch search results.")
+                    url = f"https://www.justwatch.com/us/search?q={encoded_query}"
+                    response = requests.get(url)
+
+                    if response.status_code == 200:
+                        soup = BeautifulSoup(response.content, 'html.parser')
+                        
+                        if year:
+                            results = soup.find_all(class_='title-list-row__column-header', limit=5)
+                            for result in results:
+                                header_year = result.find("span", {"class": "header-year"})
+                                if header_year and f"({year})" in header_year.text:
+                                    if 'href' in result.attrs:
+                                        full_url = f"https://www.justwatch.com{result['href']}"
+                                        return full_url
+
+                        title_column_header = soup.find(class_='title-list-row__column-header')
+                        if title_column_header and 'href' in title_column_header.attrs:
+                            full_url = f"https://www.justwatch.com{title_column_header['href']}"
+                            return full_url
+                        else:
+                            sys.exit("No results found.")
+                    else:
+                        sys.exit("Failed to fetch JustWatch search results.")
 
             try:
                 number_matches = re.findall(r'\b\d{4}\b', initial_url)
@@ -542,6 +647,9 @@ def main():
 
         settings_icons = read_settings(settings)
         filtered_icons = filter_icons(settings_icons, all_icons)
+
+        if not filtered_icons:
+            filtered_icons = all_icons
 
         initial_response = requests.get(initial_url)
 
@@ -604,17 +712,21 @@ def main():
             print(f"Failed to retrieve initial page, status code: {initial_response.status_code}")
 
 def create_settings():
-    if not os.path.exists(programdata):
-        os.makedirs(programdata, exist_ok=True)
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder, exist_ok=True)
 
     if not os.path.exists(settings):
         with open(settings, "w") as create:
-            create.write("Netflix = True\nParamount+ = True\nHBOMax = True\nMax = True\nDisney+ = True\nPeacock = True\nHulu = True\nViaplay = True\nPrime Video = True\nApple TV+ = True\n")
+            create.write("Netflix = True\nParamount+ = True\nHBOMax = True\nMax = True\nDisney+ = True\nPeacock = True\nHulu = True\nShudder = True\nViaplay = True\nPrime Video = True\nApple TV+ = True")
+
+    if not os.path.exists(engine):
+        with open(engine, "w") as create:
+            create.write("us")
 
     if is_admin():
-        os.chmod(programdata, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+        os.chmod(data_folder, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
-create_settings_thread = threading.Thread(target=create_settings, daemon=True)
-create_settings_thread.start()
-
-main()
+if __name__ == "__main__":
+    create_settings_thread = threading.Thread(target=create_settings, daemon=True)
+    create_settings_thread.start()
+    main()
