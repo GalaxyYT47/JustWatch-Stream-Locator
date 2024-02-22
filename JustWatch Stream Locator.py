@@ -7,12 +7,6 @@ import threading
 import stat
 import re
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-
 all_icons = {
     'Netflix': "https://images.justwatch.com/icon/207360008/s100/netflix.jpg",
     'Paramount+': "https://images.justwatch.com/icon/242706661/s100/paramountplus.jpg",
@@ -723,7 +717,7 @@ def create_settings():
         with open(engine, "w") as create:
             create.write("us")
 
-    if is_admin():
+    if ctypes.windll.shell32.IsUserAnAdmin():
         os.chmod(data_folder, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
 if __name__ == "__main__":
