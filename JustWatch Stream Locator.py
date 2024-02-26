@@ -162,7 +162,10 @@ def extract_title_and_year(soup):
         title = title_block.find('h1')
         title_text = title.get_text().strip() if title else "Unknown Title"
 
-        formatted_output = title_text.replace("  ", " ")
+        year_span = title_block.find('span', class_='text-muted')
+        year_text = year_span.get_text().strip() if year_span else "Unknown Year"
+
+        formatted_output = f"{title_text} {year_text}"
         return formatted_output
 
     clear_input()
