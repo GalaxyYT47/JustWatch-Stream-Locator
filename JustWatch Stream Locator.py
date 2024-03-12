@@ -671,7 +671,6 @@ def main():
                 while True:
                     response = requests.get(url)
                     if response.status_code == 200:
-                        time.sleep(0.25)
                         return response
                     elif response.status_code == 429:
                         time.sleep(3)
