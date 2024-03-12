@@ -6,6 +6,7 @@ import ctypes
 import threading
 import stat
 import re
+import time
 
 all_icons = {
     'Netflix': "https://images.justwatch.com/icon/207360008/s100/netflix.jpg",
@@ -666,6 +667,17 @@ def main():
 
             service_continents = {service: {} for service in filtered_icons}
 
+            def make_request(url):
+                while True:
+                    response = requests.get(url)
+                    if response.status_code == 200:
+                        time.sleep(0.25)
+                        return response
+                    elif response.status_code == 429:
+                        time.sleep(3)
+                    else:
+                        return response
+
             for index, link in enumerate(alternate_links, start=1):
                 if 'hreflang' in link.attrs and 'href' in link.attrs:
                     hreflang = link['hreflang'].split('-')[-1]
@@ -673,7 +685,7 @@ def main():
                     continent = continent_mapping.get(hreflang, 'Unknown')
 
                     country_url = link['href']
-                    country_response = requests.get(country_url)
+                    country_response = make_request(country_url)
                     if country_response.status_code == 200:
                         country_soup = BeautifulSoup(country_response.content, 'html.parser')
                     found_services = find_streaming_services_icons(country_soup, filtered_icons)
@@ -701,8 +713,8 @@ def main():
 
                             print(f"- {ordered_continent}:")
                             for country, leaving_soon in continents[ordered_continent].items():
-                                leaving_soon_text = "(Leaving Soon)" if leaving_soon else ""
-                                print(f"  - {country} {leaving_soon_text}")
+                                leaving_soon_text = " (Leaving Soon)" if leaving_soon else ""
+                                print(f"  - {country}{leaving_soon_text}")
                                 any_service_found = True
 
                     print()
